@@ -1,5 +1,4 @@
 value.RUDIMENTARY.0 =BY RECKOBOT
-value.VERSION.0 =v1.1
+value.VERSION.0 =v1.2
 option.RESOLUTION.comment =As this value increases, definition decreases
 option.WARPING_INTENSITY.comment =Adjusts how strong vertex warping is
-option.SNAP_THRESHOLD.comment =Adjusts how close a coordinate has to be to a whole number for it to snap
