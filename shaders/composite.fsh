@@ -44,7 +44,7 @@ void main() {
 		if (depth >= 1.0){
 			color.rgb = mix(color.rgb, texture(colortex5, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
 		}else{
-			color.rgb *= mix(vec3(1.0)*1.1, vec3(1.5, 1.25, 1.0), NoL);
+			color.rgb *= mix(vec3(1.0), vec3(1.5, 1.25, 1.0), NoL);
 			color.rgb = mix(color.rgb, texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
 		}
 	}

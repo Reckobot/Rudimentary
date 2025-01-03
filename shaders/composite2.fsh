@@ -18,5 +18,5 @@ void main() {
 	coord *= vec2(viewWidth, viewHeight);
 	color = texelFetch(colortex0, ivec2(coord), 0);
 	color.rgb = reinhard(color.rgb);
-	color.rgb = BSC(color.rgb, 1.6, 1.0, 1.5);
+	color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
 }
