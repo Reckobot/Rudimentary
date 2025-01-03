@@ -7,9 +7,12 @@ uniform sampler2D specular;
 
 in vec2 lmcoord;
 noperspective in vec2 texcoord;
+in vec2 normaltex;
 in vec4 glcolor;
 in vec3 normal;
 in mat3 tbnmatrix;
+
+flat in int nonPerspective;
 
 /* RENDERTARGETS: 0,1,2,5 */
 layout(location = 0) out vec4 color;
@@ -24,11 +27,17 @@ vec3 getnormalmap(vec2 texcoord){
 }
 
 void main() {
-	color = texture(gtexture, texcoord) * glcolor;
+	vec2 coord;
+	if (bool(nonPerspective)){
+		coord = texcoord;
+	}else{
+		coord = normaltex;
+	}
+	color = texture(gtexture, coord) * glcolor;
 	color *= texture(lightmap, lmcoord);
 	if (color.a < 0.1) {
 		discard;
 	}
 	lightmapData = vec4(lmcoord, 0.0, 1.0);
-	encodedNormal = vec4(getnormalmap(texcoord) * 1 + 0.5, 1.0);
+	encodedNormal = vec4(getnormalmap(coord) * 1 + 0.5, 1.0);
 }

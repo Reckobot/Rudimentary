@@ -9,6 +9,7 @@ uniform sampler2D colortex1;
 uniform sampler2D colortex2;
 uniform sampler2D colortex5;
 uniform sampler2D colortex6;
+uniform sampler2D colortex7;
 
 vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
     vec4 homPos = projectionMatrix * vec4(position, 1.0);
@@ -39,11 +40,13 @@ void main() {
 	float fogFactor = exp(-4 * (1.0 - dist));
 
 	color = texture(colortex0, texcoord);
-	if (depth >= 1.0){
-		color.rgb = mix(color.rgb, texture(colortex5, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
-	}else{
-		color.rgb *= mix(vec3(1.0)*1.1, vec3(1.5, 1.25, 1.0), NoL);
-		color.rgb = mix(color.rgb, texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
+	if (texture(colortex7, texcoord) == vec4(0)){
+		if (depth >= 1.0){
+			color.rgb = mix(color.rgb, texture(colortex5, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
+		}else{
+			color.rgb *= mix(vec3(1.0)*1.1, vec3(1.5, 1.25, 1.0), NoL);
+			color.rgb = mix(color.rgb, texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
+		}
 	}
 
 	if (isEyeInWater == 1){
