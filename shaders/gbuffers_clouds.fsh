@@ -25,10 +25,5 @@ vec3 getnormalmap(vec2 texcoord){
 
 void main() {
 	color = texture(gtexture, texcoord) * glcolor;
-	color *= texture(lightmap, lmcoord);
-	if (color.a < 0.1) {
-		discard;
-	}
-	lightmapData = vec4(lmcoord, 0.0, 1.0);
-	encodedNormal = vec4(1.0);
+	encodedNormal = vec4(0);
 }

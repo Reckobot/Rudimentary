@@ -15,7 +15,8 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	vec2 coord = texcoord / RESOLUTION;
-	color = texture(colortex0, coord);
+	coord *= vec2(viewWidth, viewHeight);
+	color = texelFetch(colortex0, ivec2(coord), 0);
 	color.rgb = reinhard(color.rgb);
 	color.rgb = BSC(color.rgb, 1.6, 1.0, 1.5);
 }

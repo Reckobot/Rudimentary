@@ -11,15 +11,15 @@ in vec4 at_tangent;
 out mat3 tbnmatrix;
 
 void main() {
-	vec4 position = vec4(gl_Vertex)/1.1;
+	vec4 position = vec4(gl_Vertex);
+	vec4 refposition = vec4(gl_Vertex)/1.1;
 	vec3 viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-	if (length(viewPos) > 5){
 	float dist = SNAP_THRESHOLD;
 
 	for (int i = 0; i < 4; i++){
 		bool roundDown;
 
-		if (int(position[i]) == floor(position[i])){
+		if (int(refposition[i]) == floor(refposition[i])){
 			roundDown = true;
 		}else{
 			roundDown = false;
@@ -27,19 +27,18 @@ void main() {
 
 		vec3 random = texture(noisetex, position.xz).xyz;
 		if (roundDown){
-			float diff = abs(position[i] - floor(position[i]));
+			float diff = abs(refposition[i] - floor(refposition[i]));
 			if(diff < dist){
 				position[i] = mix(position[i], floor(position[i]), diff/1);
 				position.xyz += random/64*WARPING_INTENSITY;
 			}
 		}else{
-			float diff = abs(position[i] - ceil(position[i]));
+			float diff = abs(refposition[i] - ceil(refposition[i]));
 			if(diff < dist){
 				position[i] = mix(position[i], ceil(position[i]), diff/1);
 				position.xyz += random/64*WARPING_INTENSITY;
 			}
 		}
-	}
 	}
 
 	gl_Position = gl_ModelViewProjectionMatrix * position;

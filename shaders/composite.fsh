@@ -34,7 +34,7 @@ void main() {
 	vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
 	vec3 feetPlayerPos = (gbufferModelViewInverse * vec4(viewPos, 1.0)).xyz;
 
-	float dist = length(viewPos) / (far*0.6);
+	float dist = length(viewPos) / (far*0.7);
 	float fogFactor = exp(-4 * (1.0 - dist));
 
 	color = texture(colortex0, texcoord);
