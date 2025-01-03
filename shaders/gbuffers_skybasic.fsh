@@ -27,9 +27,10 @@ vec3 screenToView(vec3 screenPos) {
 	return tmp.xyz / tmp.w;
 }
 
-/* RENDERTARGETS: 0,5 */
+/* RENDERTARGETS: 0,5,6 */
 layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 skybuffer;
+layout(location = 2) out vec4 skybuffer2;
 
 void main() {
 	if (renderStage == MC_RENDER_STAGE_STARS) {
@@ -43,4 +44,5 @@ void main() {
 	}
 	color.rgb = BSC(color.rgb, 0.25, 2.0, 1.25);
 	skybuffer = color;
+	skybuffer2 = color;
 }

@@ -6,7 +6,7 @@ uniform sampler2D normals;
 uniform sampler2D specular;
 
 in vec2 lmcoord;
-in vec2 texcoord;
+noperspective in vec2 texcoord;
 in vec4 glcolor;
 in vec3 normal;
 in mat3 tbnmatrix;
