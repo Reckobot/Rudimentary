@@ -18,7 +18,7 @@ void main() {
 	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
 	vec4 position = vec4(gl_Vertex);
 	if (WARPING_INTENSITY != 0){
-		position = vec4(ivec4(position*(32/WARPING_INTENSITY)));
+		position = vec4(ivec4(viewPos*(32/WARPING_INTENSITY)));
 	}
 
 	if (length(viewPos) > 3){
@@ -27,7 +27,7 @@ void main() {
 		nonPerspective = 0;
 	}
 
-	gl_Position = gl_ModelViewProjectionMatrix * position;
+	gl_Position = gl_ProjectionMatrix * position;
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	normaltex = texcoord;
 	lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
