@@ -10,6 +10,7 @@ uniform sampler2D colortex2;
 uniform sampler2D colortex5;
 uniform sampler2D colortex6;
 uniform sampler2D colortex7;
+uniform sampler2D colortex8;
 
 vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
     vec4 homPos = projectionMatrix * vec4(position, 1.0);
@@ -36,7 +37,7 @@ void main() {
 	vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
 	vec3 feetPlayerPos = (gbufferModelViewInverse * vec4(viewPos, 1.0)).xyz;
 
-	float dist = length(viewPos) / (far*0.7);
+	float dist = length(viewPos) / (far*0.8);
 	float fogFactor = exp(-4 * (1.0 - dist));
 
 	color = texture(colortex0, texcoord);
@@ -47,6 +48,12 @@ void main() {
 			color.rgb *= mix(vec3(1.0), vec3(1.5, 1.25, 1.0), NoL);
 			color.rgb = mix(color.rgb, texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
 		}
+	}else{
+		color.rgb = mix(color.rgb, texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0), clamp(fogFactor, 0.0, 1.0));
+	}
+
+	if (texture(colortex8, texcoord) != vec4(0)){
+		color = texture(colortex8, texcoord);
 	}
 
 	if (isEyeInWater == 1){

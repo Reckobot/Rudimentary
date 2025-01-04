@@ -1,4 +1,4 @@
 value.RUDIMENTARY.0 =BY RECKOBOT
-value.VERSION.0 =v1.6
+value.VERSION.0 =v1.7
 option.RESOLUTION.comment =As this value increases, definition decreases
 option.WARPING_INTENSITY.comment =Adjusts how strong vertex warping is

@@ -26,6 +26,7 @@ vec3 getnormalmap(vec2 texcoord){
 
 void main() {
 	color = texture(gtexture, texcoord) * glcolor;
+	color.a = 1;
 	encodedNormal = vec4(0);
 	cloudbuffer = color;
 }
