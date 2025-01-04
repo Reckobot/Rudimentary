@@ -21,7 +21,7 @@ void main() {
 		position = vec4(ivec4(position*(32/WARPING_INTENSITY)));
 	}
 
-	if (length(viewPos) > 2){
+	if (length(viewPos) > 4){
 		nonPerspective = 1;
 	}else{
 		nonPerspective = 0;
