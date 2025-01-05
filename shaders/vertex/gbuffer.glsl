@@ -18,7 +18,7 @@ void main() {
 	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
 	vec4 position = vec4(gl_Vertex);
 	if (WARPING_INTENSITY != 0){
-		position = vec4(ivec4(viewPos*(80/(WARPING_INTENSITY*pow(length(viewPos), 0.75)))));
+		position = vec4(ivec4(viewPos*(24/(WARPING_INTENSITY))));
 	}
 
 	if (length(viewPos) > 3){

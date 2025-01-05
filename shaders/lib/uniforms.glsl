@@ -14,3 +14,4 @@ uniform vec3 fogColor;
 uniform vec3 shadowLightPosition;
 
 uniform int isEyeInWater;
+uniform int logicalHeightLimit;

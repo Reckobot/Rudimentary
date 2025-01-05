@@ -17,6 +17,9 @@ void main() {
 	vec2 coord = texcoord / RESOLUTION;
 	coord *= vec2(viewWidth, viewHeight);
 	color = texelFetch(colortex0, ivec2(coord), 0);
+	if (logicalHeightLimit == 256){
+		color.rgb = BSC(color.rgb, 0.5, 0.0, 0.75);
+	}
 	color.rgb = reinhard(color.rgb);
 	color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
 }
