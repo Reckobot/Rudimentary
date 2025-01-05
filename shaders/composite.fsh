@@ -42,15 +42,19 @@ void main() {
 
 	color = texture(colortex0, texcoord);
 
-	vec3 sky = texture(colortex5, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0);
-	if (logicalHeightLimit == 256){
-		sky = vec3(0.5);
-	}
+	vec3 sky = texture(colortex6, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0);
 
 	if (texture(colortex7, texcoord) == vec4(0)){
 		if (depth >= 1.0){
+			sky = texture(colortex5, texcoord).rgb*clamp(1-(playerMood*16), 0.0, 1.0);
+			if (logicalHeightLimit == 256){
+				sky = vec3(0.5);
+			}
 			color.rgb = mix(color.rgb, sky, clamp(fogFactor, 0.0, 1.0));
 		}else{
+			if (logicalHeightLimit == 256){
+				sky = vec3(0.5);
+			}
 			color.rgb *= mix(vec3(1.0), vec3(1.5, 1.25, 1.0), NoL);
 			color.rgb = mix(color.rgb, sky, clamp(fogFactor, 0.0, 1.0));
 		}
