@@ -16,12 +16,17 @@ flat out int nonPerspective;
 
 void main() {
 	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
-	vec4 position = vec4(gl_Vertex);
+	vec4 position = viewPos;
 	if (WARPING_INTENSITY != 0){
 		position = vec4(ivec4(viewPos*(24/(WARPING_INTENSITY))));
 	}
 
-	if (length(viewPos) > 3){
+	bool warpingenabled = false;
+	#ifdef TEXTURE_WARPING
+		warpingenabled = true;
+	#endif
+
+	if ((length(viewPos) > 3)&&(warpingenabled)){
 		nonPerspective = 1;
 	}else{
 		nonPerspective = 0;

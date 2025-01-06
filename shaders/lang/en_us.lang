@@ -1,5 +1,5 @@
 value.RUDIMENTARY.0 =BY RECKOBOT
-value.VERSION.0 =v2.0
+value.VERSION.0 =v2.1
 option.RUDIMENTARY.comment =A PS1 styled shader made by recko, aka reckobot. I hope you have fun using this!
 option.RESOLUTION.comment =As this value increases, definition decreases
 option.WARPING_INTENSITY.comment =Adjusts how strong vertex warping is
