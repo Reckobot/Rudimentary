@@ -39,8 +39,10 @@ void main() {
 	glcolor = gl_Color;
 	normal = gl_NormalMatrix * gl_Normal;
 
-	vec3 tangent = mat3(gbufferModelViewInverse) * normalize(gl_NormalMatrix * at_tangent.xyz);
-	vec3 bitangent = mat3(gbufferModelViewInverse) * normalize(cross(tangent, normal) * at_tangent.w);
-	normal = mat3(gbufferModelViewInverse) * normal;
-	tbnmatrix = mat3(tangent, bitangent, normal);
+	vec3 tangent = normalize(gl_NormalMatrix * at_tangent.xyz);
+	vec3 bitangent = normalize(cross(tangent, normal) * at_tangent.w);
+	tbnmatrix = mat3(mat3(gbufferModelViewInverse) * tangent, 
+		mat3(gbufferModelViewInverse) * bitangent, 
+		mat3(gbufferModelViewInverse) * normal
+	);
 }
