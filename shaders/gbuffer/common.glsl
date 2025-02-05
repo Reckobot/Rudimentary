@@ -40,9 +40,9 @@ void main() {
 			vec3 tintcolor = vec3(0.4, 0.8, 0.2);
 			vec4 tint = vec4(tintcolor, glcolor.a);
 			if (bool(isLeaves)){
-				tint.rgb = BSC(tint.rgb, 1.7, (1-getLuminance(texture(gtexture, coord).rgb))*2.1*tintSaturation, 1.0);
+				tint.rgb = BSC(tint.rgb, 1.2, (1-getLuminance(texture(gtexture, coord).rgb))*2*tintSaturation, 1.0);
 			}else{
-				tint.rgb = BSC(tint.rgb, 1.5, 0.9, 1.75);
+				tint.rgb = BSC(tint.rgb, 1.2, 0.8, 1.75);
 			}
 			color = texture(gtexture, coord) * tint;
 			color.rgb = BSC(color.rgb, 1.0, 1.0, 0.8);
