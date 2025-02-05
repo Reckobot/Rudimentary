@@ -1,1 +1,1 @@
-#include "/vertex/gbuffer.glsl"
+#include "/vertex/common.glsl"

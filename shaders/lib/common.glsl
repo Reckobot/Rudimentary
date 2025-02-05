@@ -1,3 +1,26 @@
+#include "/lib/settings.glsl"
+
+const float ambientOcclusionLevel = 0;
+
+uniform vec3 shadowLightPosition;
+uniform mat4 gbufferModelViewInverse;
+uniform mat4 gbufferProjectionInverse;
+uniform mat4 gbufferModelView;
+uniform float far;
+uniform int isEyeInWater;
+uniform float playerMood;
+uniform float constantMood;
+
+uniform vec3 cameraPosition;
+uniform vec3 fogColor;
+uniform vec3 skyColor;
+uniform int logicalHeightLimit;
+
+uniform float viewWidth;
+uniform float viewHeight;
+
+const vec3 alphaFogColor = vec3(0.75, 0.85, 1.0);
+
 vec3 BSC(vec3 color, float brt, float sat, float con)
 {
 	// Increase or decrease theese values to adjust r, g and b color channels seperately
@@ -16,6 +39,34 @@ vec3 BSC(vec3 color, float brt, float sat, float con)
 	return conColor;
 }
 
-float getBrightness(vec3 color){
-	return (color.r + color.g + color.b)/3;
+float increment(float original, float numerator, float denominator){
+    return round(original * denominator / numerator) * numerator / denominator;
 }
+
+vec3 projectAndDivide(mat4 projectionMatrix, vec3 position){
+	vec4 homPos = projectionMatrix * vec4(position, 1.0);
+	return homPos.xyz / homPos.w;
+}
+
+float getLuminance(vec3 c){
+	return dot(vec3(0.2126, 0.7152, 0.0722), c);
+}
+
+float fogify(float x, float w) {
+	return w / (x * x + w);
+}
+
+vec3 calcSkyColor(vec3 pos) {
+	float upDot = dot(pos, gbufferModelView[1].xyz);
+	return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor*2), 0.0, 1.0), 1.0, 1.0), fogColor, fogify(max((upDot), 0.0), 0.01));
+}
+
+vec3 screenToView(vec3 screenPos) {
+	vec4 ndcPos = vec4(screenPos, 1.0) * 2.0 - 1.0;
+	vec4 tmp = gbufferProjectionInverse * ndcPos;
+	return tmp.xyz / tmp.w;
+}
+
+
+const int RGBA16F = 0;
+const int colortex0Format = RGBA16F;

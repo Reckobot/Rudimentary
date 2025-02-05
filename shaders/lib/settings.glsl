@@ -1,34 +1,27 @@
-#define RUDIMENTARY 0 //[0]
-#define VERSION 0 //[0]
+#define ALPHACRAFT 0 //[0]
+#define DISCLAIMER 0 //[0]
 
-#define BRIGHTNESS 1.5 //[0.0 0.25 0.5 0.75 1.0 1.25 1.375 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0]
-#define SATURATION 1.0 //[0.0 0.25 0.5 0.75 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0]
-#define CONTRAST 1.5 //[0.0 0.25 0.5 0.75 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0]
+#define RENDER_DISTANCE 3 //[0 1 2 3 4 5]
+#define PRESET 0 //[0 1]
+#define FAST_LEAVES
+//#define INVISIBLE_GRASS
+#define CLOUD_OFFSET -75 //[-200 -175 -150 -125 -100 -75 -50 -25 0 25 50 75 100 125 150 175 200]
+//#define WATERMARK
+#define WATERMARK_SCALE 6 //[1 2 3 4 5 6 7 8 9 10]
 
-#define RESOLUTION 3.0 //[1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 32.0 64.0]
-//#define TEXTURE_WARPING
-#define WARPING_INTENSITY 1.0 //[0.0 0.25 0.5 0.75 1.0 1.25 1.5 1.75 2.0 2.25 2.5 2.75 3.0 3.25 3.5 3.75 4.0 4.25 4.5 4.75 5.0]
-#define SUN_ROTATION 0 //[0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90]
+#define BRIGHTNESS 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define SATURATION 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define CONTRAST 1.2 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
-const int RGBA8 = 0;
-const int RGBA16F = 0;
-const int RGBA32F = 0;
-const int colortex0Format = RGBA16F;
-const int colortex1Format = RGBA16F;
-const int colortex2Format = RGBA16F;
-const int colortex3Format = RGBA16F;
-const int colortex4Format = RGBA16F;
-const int colortex5Format = RGBA16F;
-const int colortex6Format = RGBA16F;
-const int colortex7Format = RGBA16F;
-const int colortex8Format = RGBA16F;
-const int colortex9Format = RGBA16F;
-const int colortex10Format = RGBA16F;
-const int colortex11Format = RGBA16F;
-const int colortex12Format = RGBA16F;
-const int colortex13Format = RGBA16F;
-const int colortex14Format = RGBA16F;
-const int colortex15Format = RGBA16F;
+#define WATER_TRANSPARENCY 0.75 //[0.0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 0.8 0.85 0.9 0.95 1.0]
+#define WATER_BRIGHTNESS 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define WATER_SATURATION 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define WATER_CONTRAST 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
-const float sunPathRotation = SUN_ROTATION;
-const float ambientOcclusionLevel = 1.0;
+#define FOLIAGE_BRIGHTNESS 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define FOLIAGE_SATURATION 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+#define FOLIAGE_CONTRAST 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
+
+#define RES_SCALE 3 //[1 2 3 4 5 6 7 8 9 10 11 12]
+#define DISTORTION 0.5 //[0.5 1 2 3 4 5 6 7 8]
+#define NO_PERSPECTIVE

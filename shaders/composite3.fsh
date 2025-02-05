@@ -14,5 +14,5 @@ in vec2 texcoord;
 layout(location = 0) out vec4 color;
 
 void main() {
-	color = texture(colortex0, texcoord);
+	color = texelFetch(colortex0, ivec2(texcoord*vec2(viewWidth,viewHeight)), 0);
 }
