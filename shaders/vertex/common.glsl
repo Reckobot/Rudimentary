@@ -2,7 +2,7 @@
 #include "/lib/common.glsl"
 
 out vec2 lmcoord;
-out vec2 texcoord;
+noperspective out vec2 texcoord;
 out vec2 normal_texcoord;
 out vec4 glcolor;
 out vec3 normal;
