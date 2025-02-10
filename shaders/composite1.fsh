@@ -47,6 +47,9 @@ void main() {
 		renderdist *= 0.5;
 	}
 
+	fogdensity *= 1+rainStrength*0.5;
+	renderdist *= 1+rainStrength*8;
+
 	#ifndef DISTANT_HORIZONS
 	if ((depth < 1)){
 		doFog = true;
