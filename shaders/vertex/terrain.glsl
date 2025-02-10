@@ -1,9 +1,9 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
+#include "/lib/settings.glsl"
 
 out vec2 lmcoord;
-noperspective out vec2 texcoord;
-out vec2 normal_texcoord;
+out vec2 texcoord;
 out vec4 glcolor;
 out vec3 normal;
 
@@ -18,14 +18,19 @@ uniform int entityId;
 in vec2 mc_Entity;
 
 void main() {
-	gl_Position = ftransform();
+	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
+	vec4 position = viewPos;
+	if (DISTORTION != 0){
+		position = vec4(ivec4(viewPos*(24/(DISTORTION))));
+	}
+
+	gl_Position = gl_ProjectionMatrix * position;
 	if (entityId == 100){
 		isEntityShadow = 1;
 	}else{
 		isEntityShadow = 0;
 	}
 	texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
-	normal_texcoord = texcoord;
 	lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
 	glcolor = gl_Color;
 	normal = gl_NormalMatrix * gl_Normal;

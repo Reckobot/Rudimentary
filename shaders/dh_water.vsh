@@ -5,12 +5,9 @@ out vec2 lmcoord;
 out vec2 texcoord;
 out vec4 glcolor;
 out vec3 normal;
+out vec3 viewPos;
 
-flat out int isTintedAlpha;
 flat out int isEntityShadow;
-flat out int isLeaves;
-flat out int isGrass;
-out float tintSaturation;
 
 uniform int entityId;
 
@@ -29,27 +26,8 @@ void main() {
 	normal = gl_NormalMatrix * gl_Normal;
 	normal = mat3(gbufferModelViewInverse) * normal;
 
-	if ((mc_Entity.x >= 100)&&(mc_Entity.x <= 102)){
-		isTintedAlpha = 1;
-	}else{
-		isTintedAlpha = 0;
-	}
-
-	if (mc_Entity.x == 101){
-		tintSaturation = 1.0;
-	}else{
-		tintSaturation = 1.7;
-	}
-
-	if (mc_Entity.x != 100){
-		isLeaves = 1;
-	}else{
-		isLeaves = 0;
-	}
-
-	if (mc_Entity.x == 102){
-		isGrass = 1;
-	}else{
-		isGrass = 0;
-	}
+    vec3 vPos = gl_Vertex.xyz;
+    vec3 cameraOffset = fract(cameraPosition);
+    vPos = floor(vPos + cameraOffset + 0.5) - cameraOffset;
+    viewPos = (mat3(gl_ModelViewMatrix) * vPos);
 }

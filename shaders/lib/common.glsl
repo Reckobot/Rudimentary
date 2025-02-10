@@ -1,5 +1,3 @@
-#include "/lib/settings.glsl"
-
 const float ambientOcclusionLevel = 0;
 
 uniform vec3 shadowLightPosition;
@@ -57,8 +55,8 @@ float fogify(float x, float w) {
 }
 
 vec3 calcSkyColor(vec3 pos) {
-	float upDot = dot(pos, gbufferModelView[1].xyz);
-	return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor), 0.0, 1.0)*0.75, 2.0, 1.0), fogColor * vec3(1.25,1.125,1), fogify(max((upDot/4)+0.025, 0.0), 0.01));
+	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
+	return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor)*0.75, 0.0, 1.0), 1.0, 1.0), fogColor, fogify(max((upDot/4)+0.05, 0.0), 0.01));
 }
 
 vec3 screenToView(vec3 screenPos) {

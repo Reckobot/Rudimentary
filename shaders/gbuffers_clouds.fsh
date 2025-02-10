@@ -1,5 +1,6 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
+#include "/lib/settings.glsl"
 
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
@@ -20,6 +21,10 @@ layout(location = 2) out vec4 encodedNormal;
 layout(location = 3) out vec4 cloudBuffer;
 
 void main() {
+	#ifdef DISTANT_HORIZONS
+		discard;
+	#endif
+
 	if ((bool(isTintedAlpha))&&((((glcolor.r + glcolor.b)/2) - glcolor.g) <= -0.1)){
 		vec3 tintcolor = vec3(0.27, 0.8, 0.2);
 		vec4 tint = vec4(tintcolor, glcolor.a);

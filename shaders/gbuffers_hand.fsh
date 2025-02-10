@@ -1,1 +1,1 @@
-#include "/gbuffer/hand.glsl"
+#include "/gbuffer/common.glsl"

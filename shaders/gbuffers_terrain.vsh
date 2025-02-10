@@ -1,1 +1,1 @@
-#include "/vertex/common.glsl"
+#include "/vertex/terrain.glsl"

@@ -1,5 +1,6 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
+#include "/lib/settings.glsl"
 
 uniform sampler2D depthtex0;
 uniform sampler2D colortex0;
@@ -30,10 +31,6 @@ void main() {
 		color.rgb = BSC(color.rgb, 1.0, 1.1, 1.0);
 	}
 
-	if ((depth < 1)){
-		doFog = true;
-	}
-
 	float renderdist;
 
 	#if RENDER_DISTANCE == 1
@@ -46,16 +43,26 @@ void main() {
 		renderdist = 0.6;
 	#endif
 
+	if (texture(colortex3, texcoord) == vec4(1)){
+		renderdist *= 0.5;
+	}
+
+	#ifndef DISTANT_HORIZONS
+	if ((depth < 1)){
+		doFog = true;
+	}
+	#else
+		doFog = false;
+	#endif
+
 	if (isEyeInWater == 1){
-		fogcolor = vec3(0.2,0.2,0.35)*1.25;
-		fogdensity = 0.1;
+		fogcolor = vec3(0.05,0.05,0.35)*0.6;
+		fogdensity = 0.15;
 		renderdist = 8;
 		doFog = true;
 	}
 
-	if (texture(colortex3, texcoord) == vec4(1)){
-		renderdist *= 0.5;
-	}
+	renderdist /= RENDER_DISTANCE_MULT;
 
 	float dist = (length(viewPos) / (64/fogdensity))*4*renderdist;
 
@@ -70,9 +77,7 @@ void main() {
 				color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
 			}
 		#else
-			if (isEyeInWater != 1){
-				fogcolor = alphaFogColor;
-			}
+			fogcolor = alphaFogColor;
 			fogcolor = BSC(fogcolor, getLuminance(skyColor)*1.5, 1.0, 1.0);
 			fogdensity = 0.9;
 			float fogFactor = exp(-4*fogdensity * (1.0 - dist));

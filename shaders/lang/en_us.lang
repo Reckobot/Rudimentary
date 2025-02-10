@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v3.2
+value.ALPHACRAFT.0 = v4.0
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -35,12 +35,14 @@ option.FOLIAGE_CONTRAST = Contrast
 option.WATERMARK = Alpha watermark
 option.WATERMARK_SCALE = Alpha watermark scale
 
-option.RES_SCALE = Resolution scale
-option.NO_PERSPECTIVE = No perspective
-option.DISTORTION = Distortion
-
 option.PRESET = Color preset
 value.PRESET.0 = ALPHA
 value.PRESET.1 = BETA
 value.PRESET.0.comment = Brighter colors, vibrant
 value.PRESET.1.comment = Dimmer colors, easier on the eyes
+
+option.RENDER_DISTANCE_MULT = Render distance multiplier
+
+option.RESOLUTION_SCALE = Resolution scale
+option.DISTORTION = Vertex distortion
+value.DISTORTION.0 = Off

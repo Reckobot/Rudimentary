@@ -1,5 +1,6 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
+#include "/lib/settings.glsl"
 
 uniform sampler2D depthtex0;
 uniform sampler2D colortex0;
@@ -29,7 +30,8 @@ void main() {
 		mult *= 1-encodedNormal.r;
 		mult *= dot(encodedNormal.rgb, vec3(0,1,0));
 
-		color.rgb *= mix(vec3(1,1.5,2)*0.5, vec3(4,2,1)*1.25, mult);
+		mult = clamp(mult*4+0.25, 0.0, 1.0);
+		color.rgb *= mix(ambientColor, sunColor, mult);
+		color.rgb *= texture(colortex1, texcoord).rgb;
 	}
-	color.rgb *= texture(colortex1, texcoord).rgb;
 }

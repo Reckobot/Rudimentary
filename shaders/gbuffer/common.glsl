@@ -1,5 +1,6 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
+#include "/lib/settings.glsl"
 
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
@@ -8,8 +9,7 @@ in vec3 normal;
 uniform float alphaTestRef = 0.1;
 
 in vec2 lmcoord;
-noperspective in vec2 texcoord;
-in vec2 normal_texcoord;
+in vec2 texcoord;
 in vec4 glcolor;
 
 flat in int isTintedAlpha;
@@ -18,44 +18,33 @@ flat in int isEntityShadow;
 flat in int isLeaves;
 flat in int isGrass;
 
-in vec2 mc_midTexCoord;
-
 /* RENDERTARGETS: 0,1,2 */
 layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 light;
 layout(location = 2) out vec4 encodedNormal;
 
 void main() {
-	vec2 coord;
-	#ifdef NO_PERSPECTIVE
-		vec2 size = abs(mc_midTexCoord - normal_texcoord);
-		vec2 corner1 = mc_midTexCoord - size;
-		vec2 corner2 = mc_midTexCoord + size;
-		coord = clamp(texcoord, corner1, corner2);
-	#else
-		coord = normal_texcoord;
-	#endif
 	#if PRESET == 0
-		if ((bool(isTintedAlpha))&&((((glcolor.r + glcolor.b)/2) - glcolor.g) <= -0.1)){
+		if ((bool(isTintedAlpha))&&((((glcolor.r + glcolor.b)/2)/glcolor.g)<0.8)){
 			vec3 tintcolor = vec3(0.4, 0.8, 0.2);
 			vec4 tint = vec4(tintcolor, glcolor.a);
 			if (bool(isLeaves)){
-				tint.rgb = BSC(tint.rgb, 1.2, (1-getLuminance(texture(gtexture, coord).rgb))*2*tintSaturation, 1.0);
+				tint.rgb = BSC(tint.rgb, 1.0, (1-getLuminance(texture(gtexture, texcoord).rgb))*2.1*tintSaturation, 1.0);
 			}else{
-				tint.rgb = BSC(tint.rgb, 1.2, 0.8, 1.75);
+				tint.rgb = BSC(tint.rgb, 1.2, 0.865, 1.75);
 			}
-			color = texture(gtexture, coord) * tint;
+			color = texture(gtexture, texcoord) * tint;
 			color.rgb = BSC(color.rgb, 1.0, 1.0, 0.8);
 			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
 		}else{
-			color = texture(gtexture, coord) * glcolor;
+			color = texture(gtexture, texcoord) * glcolor;
 		}
 	#else
 		if (bool(isTintedAlpha)){
-			color = texture(gtexture, coord) * vec4(BSC(glcolor.rgb, 1.0, 1.2, 1.0), 1);
+			color = texture(gtexture, texcoord) * vec4(BSC(glcolor.rgb, 1.0, 1.2, 1.0), 1);
 			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
 		}else{
-			color = texture(gtexture, coord) * glcolor;
+			color = texture(gtexture, texcoord) * glcolor;
 		}
 	#endif
 	vec2 lmc = lmcoord;

@@ -1,1 +1,1 @@
-#include "/vertex/hand.glsl"
+#include "/vertex/common.glsl"
