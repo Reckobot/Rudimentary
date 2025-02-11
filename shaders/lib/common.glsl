@@ -75,5 +75,5 @@ vec3 screenToView(vec3 screenPos) {
 }
 
 
-const int RGBA16F = 0;
-const int colortex0Format = RGBA16F;
+const int RGBA8F = 0;
+const int colortex0Format = RGBA8F;

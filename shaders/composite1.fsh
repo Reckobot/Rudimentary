@@ -97,4 +97,34 @@ void main() {
 		vec4 watermark = texelFetch(colortex6, coord, 0);
 		color.rgb = mix(color.rgb, watermark.rgb, watermark.a);
 	#endif
+
+	#ifdef DITHERING
+		float threshold = 1.0;
+		ivec2 pixelpos = ivec2(texcoord * vec2(viewWidth, viewHeight));
+		if (mod(pixelpos.y, 2.0) == 0){
+			if (mod(pixelpos.x, 2.0) == 0){
+				threshold = 0.125;
+			}else{
+				threshold = 0.5;
+			}
+		}else{
+			if (mod(pixelpos.x, 2.0) == 0){
+				threshold = 1.0;
+			}else{
+				threshold = 0.25;
+			}
+		}
+
+		int divisions = 16;
+
+		float luminance = getLuminance(color.rgb);
+		if (luminance < threshold){
+			for (int i = 0; i < divisions; i++){
+				if ((luminance >= (i*(threshold/divisions)))&&(luminance <= ((i+1)*(threshold/divisions)))){
+					color.rgb *= clamp(i*(threshold/divisions)+0.5, 0.0, 1.0);
+					break;
+				}
+			}
+		}
+	#endif
 }
