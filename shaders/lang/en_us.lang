@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v4.1
+value.ALPHACRAFT.0 = v4.3
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -46,3 +46,6 @@ option.RENDER_DISTANCE_MULT = Render distance multiplier
 option.RESOLUTION_SCALE = Resolution scale
 option.DISTORTION = Vertex distortion
 value.DISTORTION.0 = Off
+
+option.HORROR = Horror mode
+option.HORROR.comment = Spoopy.

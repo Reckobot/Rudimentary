@@ -1,4 +1,5 @@
 #version 330 compatibility
+#include "/lib/common.glsl"
 
 uniform sampler2D gtexture;
 
@@ -15,4 +16,7 @@ void main() {
 	if (color.a < alphaTestRef) {
 		discard;
 	}
+	#ifdef HORROR
+		color.rgb = BSC(color.rgb, 1.0, 0.0, 1.0);
+	#endif
 }

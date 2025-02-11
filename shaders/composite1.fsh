@@ -44,11 +44,11 @@ void main() {
 	#endif
 
 	if (texture(colortex3, texcoord) == vec4(1)){
-		renderdist *= 0.5;
+		renderdist *= 0.25;
 	}
 
-	fogdensity *= 1+rainStrength*0.5;
-	renderdist *= 1+rainStrength*8;
+	fogdensity *= 1+rainStrength*0.25;
+	renderdist *= 1+rainStrength;
 
 	#ifndef DISTANT_HORIZONS
 	if ((depth < 1)){
@@ -65,6 +65,11 @@ void main() {
 		doFog = true;
 	}
 
+	#ifdef HORROR
+		fogdensity *= 0.5;
+		renderdist *= 8-(getLuminance(skyColor)*8);
+	#endif
+
 	renderdist /= RENDER_DISTANCE_MULT;
 
 	float dist = (length(viewPos) / (64/fogdensity))*4*renderdist;
@@ -74,21 +79,17 @@ void main() {
 	#endif
 
 	#if RENDER_DISTANCE != 5
-		#if RENDER_DISTANCE == 0 || RENDER_DISTANCE == 1 || RENDER_DISTANCE == 2
-			if (doFog){
-				float fogFactor = exp(-4*fogdensity * (1.0 - dist));
-				color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
-			}
-		#else
-			fogcolor = alphaFogColor;
-			fogcolor = BSC(fogcolor, getLuminance(skyColor)*1.5, 1.0, 1.0);
-			fogdensity = 0.9;
+		if (doFog){
 			float fogFactor = exp(-4*fogdensity * (1.0 - dist));
 			color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
-		#endif
+		}
 	#endif
 
-	color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
+	#ifdef HORROR
+		color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
+	#else
+		color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
+	#endif
 
 	#ifdef WATERMARK
 		ivec2 coord = ivec2(texcoord*vec2(viewWidth, viewHeight))/ivec2(WATERMARK_SCALE);

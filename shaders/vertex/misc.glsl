@@ -20,7 +20,7 @@ in vec2 mc_Entity;
 void main() {
 	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
 	vec4 position = viewPos;
-	if ((DISTORTION != 0)&&(mc_Entity.x != 300)){
+	if (DISTORTION != 0){
 		position = vec4(ivec4(viewPos*(24/(DISTORTION))));
 	}
 
