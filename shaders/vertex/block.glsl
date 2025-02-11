@@ -14,13 +14,14 @@ flat out int isGrass;
 out float tintSaturation;
 
 uniform int entityId;
+uniform int blockEntityId;
 
 in vec2 mc_Entity;
 
 void main() {
 	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
 	vec4 position = viewPos;
-	if ((DISTORTION != 0)&&(mc_Entity.x != 300)&&(gl_Color.rgb != vec3(0))){
+	if ((DISTORTION != 0)&&(mc_Entity.x != 300)&&(gl_Color.rgb != vec3(0))&&(blockEntityId != 300)){
 		position = vec4(ivec4(viewPos*(24/(DISTORTION))));
 	}
 
