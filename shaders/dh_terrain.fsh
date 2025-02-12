@@ -51,7 +51,11 @@ void main() {
 		}
 	#else
 		color = texture(gtexture, texcoord) * glcolor;
-		color.rgb = BSC(color.rgb, 1.0, 1.25, 1.0);
+		if (!bool(isLeaves)){
+			color.rgb = BSC(color.rgb, 1.25, 1.25, 1.0);
+		}else{
+			color.rgb = BSC(color.rgb, 1.35, 1.25, 1.0);
+		}
 	#endif
 	vec2 lmc = lmcoord;
 	light = texture(lightmap, lmc);

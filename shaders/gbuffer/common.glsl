@@ -41,7 +41,7 @@ void main() {
 		}
 	#else
 		if (bool(isTintedAlpha)){
-			color = texture(gtexture, texcoord) * vec4(BSC(glcolor.rgb, 1.0, 1.2, 1.0), 1);
+			color = texture(gtexture, texcoord) * vec4(BSC(glcolor.rgb, 1.0, 1.0, 1.0), 1);
 			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
 		}else{
 			color = texture(gtexture, texcoord) * glcolor;

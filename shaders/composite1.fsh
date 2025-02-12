@@ -115,13 +115,13 @@ void main() {
 			}
 		}
 
-		int divisions = 16;
+		int divisions = 256;
 
 		float luminance = getLuminance(color.rgb);
 		if (luminance < threshold){
 			for (int i = 0; i < divisions; i++){
 				if ((luminance >= (i*(threshold/divisions)))&&(luminance <= ((i+1)*(threshold/divisions)))){
-					color.rgb *= clamp(i*(threshold/divisions)+0.5, 0.0, 1.0);
+					color.rgb *= clamp(i*(threshold/divisions)+(0.25/DITHERING_INTENSITY), 0.0, 1.0);
 					break;
 				}
 			}

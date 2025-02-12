@@ -56,13 +56,19 @@ float fogify(float x, float w) {
 }
 
 //#define HORROR
+#define COLORED_LIGHTING
 
 vec3 calcSkyColor(vec3 pos) {
 	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
-	vec3 color = mix(fogColor * vec3(1.5,1.25,1) *0.75, vec3(0.5), rainStrength);
+	vec3 color;
+	#ifdef COLORED_LIGHTING
+		color = mix(fogColor * vec3(1.5,1.25,1) *0.75, vec3(0.5), rainStrength);
+	#else
+		color = mix(fogColor, vec3(0.5), rainStrength);
+	#endif
 	color = BSC(color, getLuminance(skyColor)*1.5, 1.0, 1.0);
 	#ifndef HORROR
-		return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor)*0.5, 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
+		return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor), 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
 	#else
 		return vec3(1)*getLuminance(skyColor);
 	#endif
