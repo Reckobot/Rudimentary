@@ -56,7 +56,7 @@ float fogify(float x, float w) {
 }
 
 //#define HORROR
-#define COLORED_LIGHTING
+//#define COLORED_LIGHTING
 
 vec3 calcSkyColor(vec3 pos) {
 	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
