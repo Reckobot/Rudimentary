@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v4.9
+value.ALPHACRAFT.0 = v5.0
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -46,8 +46,6 @@ option.RENDER_DISTANCE_MULT = Render distance multiplier
 option.RESOLUTION_SCALE = Resolution scale
 option.DISTORTION = Vertex distortion
 value.DISTORTION.0 = Off
-option.DITHERING = Dithering
-option.DITHERING_INTENSITY = Dithering intensity
 option.COLORED_LIGHTING = Vibrance
 option.LIGHTING_SATURATION = Lighting saturation
 option.ENTITY_DISTORTION = Entity distortion
