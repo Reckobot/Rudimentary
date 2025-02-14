@@ -9,6 +9,7 @@ uniform int isEyeInWater;
 uniform float playerMood;
 uniform float constantMood;
 uniform float rainStrength;
+uniform float frameTimeCounter;
 
 uniform vec3 cameraPosition;
 uniform vec3 fogColor;
@@ -22,7 +23,6 @@ const vec3 alphaFogColor = vec3(0.75, 0.85, 1.0);
 
 vec3 BSC(vec3 color, float brt, float sat, float con)
 {
-	// Increase or decrease theese values to adjust r, g and b color channels seperately
 	const float AvgLumR = 0.5;
 	const float AvgLumG = 0.5;
 	const float AvgLumB = 0.5;
@@ -79,7 +79,3 @@ vec3 screenToView(vec3 screenPos) {
 	vec4 tmp = gbufferProjectionInverse * ndcPos;
 	return tmp.xyz / tmp.w;
 }
-
-
-const int RGBA8F = 0;
-const int colortex0Format = RGBA8F;

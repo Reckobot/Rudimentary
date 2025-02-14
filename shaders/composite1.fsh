@@ -85,12 +85,6 @@ void main() {
 		}
 	#endif
 
-	#ifdef HORROR
-		color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
-	#else
-		color.rgb = BSC(color.rgb, BRIGHTNESS, SATURATION, CONTRAST);
-	#endif
-
 	#ifdef WATERMARK
 		ivec2 coord = ivec2(texcoord*vec2(viewWidth, viewHeight))/ivec2(WATERMARK_SCALE);
 		coord.y = int(viewHeight/(WATERMARK_SCALE+0.005)) - coord.y;
