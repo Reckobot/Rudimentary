@@ -27,8 +27,8 @@ void main() {
 		brightness = 4;
 	#endif
 	if (bool(isWater)){
-		vec4 waterColor;
-		waterColor.rgb = BSC(glcolor.rgb, brightness*0.25, 3.0, 1.0);
+		vec4 waterColor = vec4(vec3(0,0,1), 1);
+		waterColor.rgb = BSC(waterColor.rgb, brightness, 0.2, 1.0);
 		color = texture(gtexture, texcoord) * waterColor;
 		color.a = WATER_TRANSPARENCY;
 		color.rgb = BSC(color.rgb, WATER_BRIGHTNESS, WATER_SATURATION, WATER_CONTRAST);
