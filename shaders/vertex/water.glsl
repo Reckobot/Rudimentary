@@ -12,7 +12,10 @@ flat out int isWater;
 in vec2 mc_Entity;
 
 void main() {
-	vec4 viewPos = vec4(gl_ModelViewMatrix * gl_Vertex);
+	vec4 modelPos = gl_Vertex;
+	vec4 viewPos = vec4(gl_ModelViewMatrix * modelPos);
+	vec4 worldPos = gbufferModelViewInverse * viewPos;
+	worldPos.xyz += cameraPosition;
 	vec4 position = viewPos;
 	if (DISTORTION != 0){
 		position = vec4(ivec4(viewPos*(24/(DISTORTION))));
@@ -30,4 +33,14 @@ void main() {
 	}else{
 		isWater = 0;
 	}
+
+	float ogY = gl_Position.y;
+
+	#ifdef WAVY_WATER
+		for (int i = 0; i < 4; i += 1){
+			float height = pNoise(worldPos.xz + (frameTimeCounter)*3, 1, 10);
+			gl_Position.y += height*4;
+		}
+		gl_Position.y -= (0.075);
+	#endif
 }
