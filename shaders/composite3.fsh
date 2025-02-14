@@ -17,22 +17,23 @@ float limitDepth(float og, int depth){
 void main() {
 	color = texelFetch(colortex0, ivec2(texcoord * vec2(viewWidth, viewHeight)), 0);
 
-	#ifdef DITHERING
-		float threshold = 1.0;
-		ivec2 pixelpos = ivec2(texcoord * vec2(viewWidth, viewHeight));
-		if (mod(pixelpos.y, 2.0) == 0){
-			if (mod(pixelpos.x, 2.0) == 0){
-				threshold = 0.125;
-			}else{
-				threshold = 0.5;
-			}
+	float threshold = 1.0;
+	ivec2 pixelpos = ivec2(texcoord * vec2(viewWidth, viewHeight));
+	if (mod(pixelpos.y, 2.0) == 0){
+		if (mod(pixelpos.x, 2.0) == 0){
+			threshold = 0.125;
 		}else{
-			if (mod(pixelpos.x, 2.0) == 0){
-				threshold = 1.0;
-			}else{
-				threshold = 0.25;
-			}
+			threshold = 0.5;
 		}
+	}else{
+		if (mod(pixelpos.x, 2.0) == 0){
+			threshold = 1.0;
+		}else{
+			threshold = 0.25;
+		}
+	}
+
+	#ifdef DITHERING
 		int radius = 2;
 		float luminance = getLuminance(color.rgb);
 		for (int x = -radius; x <= radius; x++){
