@@ -32,6 +32,9 @@ void main() {
 		color = texture(gtexture, texcoord) * waterColor;
 		color.a = WATER_TRANSPARENCY;
 		color.rgb = BSC(color.rgb, WATER_BRIGHTNESS, WATER_SATURATION, WATER_CONTRAST);
+		#ifdef HORROR
+			color.rgb = BSC(color.rgb, 0.5, 0.5, 1.0);
+		#endif
 	}else{
 		color = texture(gtexture, texcoord) * glcolor;
 	}
