@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v5.5
+value.ALPHACRAFT.0 = v6.0
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -53,7 +53,17 @@ option.DITHERING = Dithering
 option.SCANLINE_GAP = Scanline gap
 option.SCANLINE_SPEED = Scanline speed
 
+option.CRT_SCANLINES = CRT scanlines
+option.CRT_DISTORTION = CRT distortion
+option.CRT_ASPECT = 4:3
+
 option.HORROR = Horror mode
 option.HORROR.comment = Spoopy.
 
 option.WAVY_WATER = Wavy water
+
+option.MARKIPLIER = markiplier.
+value.MARKIPLIER.1509 = h
+value.MARKIPLIER.-10 = null
+value.MARKIPLIER.100000000000000000000000000000000000000000000000000000000 = 1/0
+value.MARKIPLIER.17 = 17 cows

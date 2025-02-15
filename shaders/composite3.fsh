@@ -48,10 +48,12 @@ void main() {
 
 	#ifdef CRT
 		color.rgb *= clamp(threshold*3+0.125, 0.0, 1.1);
+	#endif
 
+	#ifdef CRT_SCANLINES
 		for (int i = 0; i < 2048; i++){
 			if (pixelpos.y == int(fract(frameTimeCounter)*16*SCANLINE_SPEED)-(i*SCANLINE_GAP)+(viewHeight)){
-				color.rgb *= 0.75;
+				color.rgb *= 0.5;
 			}
 		}
 	#endif
