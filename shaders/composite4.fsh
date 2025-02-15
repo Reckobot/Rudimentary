@@ -25,7 +25,7 @@ void main() {
 		color = texture(colortex0, coord);
 	#endif
 		#ifdef CRT_ASPECT
-			if (clamp(coord, vec2((viewHeight/viewWidth/4)-((viewHeight/viewWidth/4)*0.166666), 0), vec2((viewHeight/viewWidth*1.5)+((viewHeight/viewWidth/4)*0.166666), 1)) != coord){
+			if (clamp(coord, vec2(0.5-((viewHeight*1.33333)/viewWidth/2), 0), vec2(0.5+((viewHeight*1.33333)/viewWidth/2), 1)) != coord){
 				color = vec4(0);
 			}
 		#else
