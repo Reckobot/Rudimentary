@@ -39,8 +39,8 @@ void main() {
 	#ifdef WAVY_WATER
 		for (int i = 0; i < 4; i += 1){
 			float height = pNoise(worldPos.xz + (frameTimeCounter)*3, 1, 10);
-			gl_Position.y += height*4;
+			gl_Position.y += height*2;
 		}
-		gl_Position.y -= (0.075);
+		gl_Position.y -= (0.25);
 	#endif
 }
