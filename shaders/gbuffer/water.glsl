@@ -22,13 +22,13 @@ layout(location = 1) out vec4 light;
 layout(location = 2) out vec4 encodedNormal;
 
 void main() {
-	float brightness = 5;
+	float brightness = 6;
 	#if PRESET == 1
-		brightness = 4;
+		brightness = 6;
 	#endif
 	if (bool(isWater)){
 		vec4 waterColor = vec4(vec3(0,0,1), 1);
-		waterColor.rgb = BSC(waterColor.rgb, brightness, 0.35, 1.0);
+		waterColor.rgb = BSC(waterColor.rgb, brightness, 0.1, 1.0);
 		color = texture(gtexture, texcoord) * waterColor;
 		color.a = WATER_TRANSPARENCY;
 		color.rgb = BSC(color.rgb, WATER_BRIGHTNESS, WATER_SATURATION, WATER_CONTRAST);

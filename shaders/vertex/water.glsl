@@ -31,24 +31,24 @@ void main() {
 
 	if (mc_Entity.x == 200){
 		isWater = 1;
+
+		#ifdef WAVY_WATER
+			for (int i = 0; i < 4; i += 1){
+				float height = pNoise(worldPos.xz + (frameTimeCounter)*3, 1, 10);
+				gl_Position.y += height*2;
+			}
+			gl_Position.y -= (0.25);
+			vec2 halfSize = abs((texcoord) - mc_midTexCoord);
+			vec4 textureBounds = vec4(mc_midTexCoord.xy - halfSize, mc_midTexCoord.xy + halfSize);
+			texcoord -= pNoise(worldPos.xz + (frameTimeCounter-18000), 1, 5)*0.0125;
+			texcoord *= 1024;
+			texcoord = vec2(ivec2(texcoord));
+			texcoord /= 1024;
+			texcoord = clamp(texcoord, textureBounds.xy, textureBounds.zw);
+		#endif
 	}else{
 		isWater = 0;
 	}
 
 	float ogY = gl_Position.y;
-
-	#ifdef WAVY_WATER
-		for (int i = 0; i < 4; i += 1){
-			float height = pNoise(worldPos.xz + (frameTimeCounter)*3, 1, 10);
-			gl_Position.y += height*2;
-		}
-		gl_Position.y -= (0.25);
-		vec2 halfSize = abs((texcoord) - mc_midTexCoord);
-		vec4 textureBounds = vec4(mc_midTexCoord.xy - halfSize, mc_midTexCoord.xy + halfSize);
-		texcoord -= pNoise(worldPos.xz + (frameTimeCounter-18000), 1, 5)*0.0125;
-		texcoord *= 1024;
-		texcoord = vec2(ivec2(texcoord));
-		texcoord /= 1024;
-		texcoord = clamp(texcoord, textureBounds.xy, textureBounds.zw);
-	#endif
 }
