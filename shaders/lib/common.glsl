@@ -9,6 +9,7 @@ uniform int isEyeInWater;
 uniform float playerMood;
 uniform float constantMood;
 uniform float rainStrength;
+uniform int frameCounter;
 uniform float frameTimeCounter;
 
 uniform vec3 cameraPosition;
@@ -118,4 +119,11 @@ float pNoise(vec2 p, int res, float frequency){
 	}
 	float nf = n/normK;
 	return nf*nf*nf*nf;
+}
+
+float IGN(vec2 coord, int frame, vec2 res)
+{
+    float x = float(coord.x * res.x) + 5.588238 * float(frame);
+    float y = float(coord.y * res.y) + 5.588238 * float(frame);
+    return mod(52.9829189 * mod(0.06711056*float(x) + 0.00583715*float(y), 1.0), 1.0);
 }
