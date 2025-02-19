@@ -33,11 +33,6 @@ void main() {
 		isWater = 1;
 
 		#ifdef WAVY_WATER
-			for (int i = 0; i < 4; i += 1){
-				float height = pNoise(worldPos.xz + (frameTimeCounter)*3, 1, 10);
-				gl_Position.y += height*2;
-			}
-			gl_Position.y -= (0.25);
 			vec2 halfSize = abs((texcoord) - mc_midTexCoord);
 			vec4 textureBounds = vec4(mc_midTexCoord.xy - halfSize, mc_midTexCoord.xy + halfSize);
 			texcoord -= pNoise(worldPos.xz + (frameTimeCounter-18000), 1, 5)*0.005;
