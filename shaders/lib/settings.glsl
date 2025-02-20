@@ -24,9 +24,9 @@
 #define FOLIAGE_CONTRAST 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
 
 #define LIGHTING_SATURATION 1.0 //[0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0]
-#define RESOLUTION_SCALE 4 //[1 2 3 4 5 6 7 8 9 10 11 12]
+#define RESOLUTION_SCALE 3 //[1 1.5 2 2.5 3 3.5 4 4.5 5 5.5 6 6.5 7 7.5 8 8.5 9 9.5 10 11 12]
 #define DISTORTION 0.5 //[0 0.1 0.2 0.3 0.4 0.5 0.75 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0]
-#define ENTITY_DISTORTION
+//#define ENTITY_DISTORTION
 #define DITHERING
 //#define CRT
 #define SCANLINE_GAP 4 //[2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32]
@@ -34,7 +34,7 @@
 
 #define WAVY_WATER
 
-#define COLOR_DEPTH 24 //[1 2 4 8 16 24 32 64 128 256]
+#define COLOR_DEPTH 32 //[1 2 4 8 16 24 32 64 128 256]
 
 //#define CRT_DISTORTION
 //#define CRT_SCANLINES
@@ -53,3 +53,6 @@
     const vec3 sunColor = vec3(0.75);
     const vec3 ambientColor = vec3(0.25);
 #endif
+
+//#define GODRAYS
+#define GODRAYS_INTENSITY 1.0 //[0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0 2.25 2.5 2.75 3.0 3.5 4.0 4.5 5.0 10.0]

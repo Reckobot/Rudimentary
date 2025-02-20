@@ -32,6 +32,6 @@ void main() {
 
 		mult = clamp(mult*4+0.25, 0.0, 1.0);
 		color.rgb *= mix(BSC(ambientColor, 1.0, LIGHTING_SATURATION, 1.0), BSC(sunColor, 1.0, LIGHTING_SATURATION, 1.0), mult);
-		color.rgb *= texture(colortex1, texcoord).rgb * clamp(1-rainStrength, 0.5, 1.0);
+		color.rgb *= texture(colortex1, texcoord).rgb;
 	}
 }
