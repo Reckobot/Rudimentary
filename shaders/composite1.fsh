@@ -127,12 +127,12 @@ void main() {
 	volumetricIntensity *= 1-rainStrength;
 	volumetricBuffer = vec4(volumetricColor, volumetricIntensity);
 
+	#endif
+
 	#if RENDER_DISTANCE != 5
 		if (doFog){
 			float fogFactor = exp(-4*fogdensity * (1.0 - dist));
 			color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
 		}
-	#endif
-
 	#endif
 }
