@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v6.8
+value.ALPHACRAFT.0 = v7.0
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -64,6 +64,8 @@ option.WAVY_WATER = Wavy water
 
 option.GODRAYS = Godrays
 option.GODRAYS_INTENSITY = Godrays intensity
+
+option.AFFINE_TEXTURES = Affine textures
 
 option.MARKIPLIER = markiplier.
 value.MARKIPLIER.1509 = h

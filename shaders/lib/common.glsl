@@ -73,7 +73,7 @@ vec3 calcSkyColor(vec3 pos) {
 	#endif
 	color = BSC(color, getLuminance(skyColor)*1.5, 1.0, 1.0);
 	#ifndef HORROR
-		return mix(BSC(vec3(0.55, 0.74, 1), clamp(getLuminance(skyColor), 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
+		return mix(BSC(vec3(0.55, 0.74, 1)*0.75, clamp(getLuminance(skyColor), 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
 	#else
 		return vec3(1)*getLuminance(skyColor);
 	#endif

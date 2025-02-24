@@ -36,15 +36,17 @@
 
 #define COLOR_DEPTH 32 //[1 2 4 8 16 24 32 64 128 256]
 
+#define AFFINE_TEXTURES
+
 //#define CRT_DISTORTION
 //#define CRT_SCANLINES
-#define CRT_ASPECT
+//#define CRT_ASPECT
 #define MARKIPLIER 0.25 //[0.125 0.25 0.5 5 1509 2 3.14159255359 8 1538548 -10 69 100000000000000000000000000000000000000000000000000000000 sqrt(-1) 17]
 
 #ifndef HORROR
     #ifdef COLORED_LIGHTING
-        const vec3 sunColor = vec3(1.25,1.125,1)*0.85;
-        const vec3 ambientColor = vec3(1,1.125,1.25)*0.6;
+        const vec3 sunColor = vec3(1.25,1.125,1)*0.9;
+        const vec3 ambientColor = vec3(1,1.125,1.25)*0.5;
     #else
         const vec3 sunColor = vec3(1.0);
         const vec3 ambientColor = vec3(0.625);
