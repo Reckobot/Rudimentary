@@ -36,7 +36,7 @@
 
 #define COLOR_DEPTH 32 //[1 2 4 8 16 24 32 64 128 256]
 
-#define AFFINE_TEXTURES
+//#define AFFINE_TEXTURES
 
 //#define CRT_DISTORTION
 //#define CRT_SCANLINES
