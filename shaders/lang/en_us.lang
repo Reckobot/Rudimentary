@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v7.1
+value.ALPHACRAFT.0 = v7.2
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -14,7 +14,7 @@ value.RENDER_DISTANCE.4 = TINY
 value.RENDER_DISTANCE.5 = NO FOG
 option.RENDER_DISTANCE.comment = Herobrine reference
 
-option.RENDER_DISTANCE = Render distance
+option.RENDER_DISTANCE = Render distance (Fog)
 option.FAST_LEAVES = Fast leaves
 option.INVISIBLE_GRASS = Invisible grass
 option.CLOUD_OFFSET = Cloud height offset
