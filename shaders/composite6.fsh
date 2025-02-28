@@ -3,6 +3,7 @@
 #include "/lib/settings.glsl"
 
 uniform sampler2D colortex0;
+uniform sampler2D colortex6;
 
 in vec2 texcoord;
 
@@ -33,4 +34,11 @@ void main() {
 				color = vec4(0);
 			}
 		#endif
+
+	#ifdef WATERMARK
+		ivec2 c = ivec2(texcoord*vec2(viewWidth, viewHeight))/ivec2(WATERMARK_SCALE);
+		c.y = int(viewHeight/(WATERMARK_SCALE+0.005)) - c.y;
+		vec4 watermark = texelFetch(colortex6, c, 0);
+		color.rgb = mix(color.rgb, watermark.rgb, watermark.a);
+	#endif
 }

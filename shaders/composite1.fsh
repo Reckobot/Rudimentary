@@ -82,13 +82,6 @@ void main() {
 		dist = length(viewPos) / far;
 	#endif
 
-	#ifdef WATERMARK
-		ivec2 coord = ivec2(texcoord*vec2(viewWidth, viewHeight))/ivec2(WATERMARK_SCALE);
-		coord.y = int(viewHeight/(WATERMARK_SCALE+0.005)) - coord.y;
-		vec4 watermark = texelFetch(colortex6, coord, 0);
-		color.rgb = mix(color.rgb, watermark.rgb, watermark.a);
-	#endif
-
 	vec3 startPos = screenToView(vec3(texcoord.xy, depth));
 	vec3 viewDir = normalize(startPos);
 	float volumetricIntensity = 0;
