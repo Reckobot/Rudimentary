@@ -132,6 +132,11 @@ void main() {
 		if (doFog){
 			float fogFactor = exp(-4*fogdensity * (1.0 - dist));
 			color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
+
+			if (dist != dist1){
+				fogFactor = exp(-4*fogdensity * (1.0 - dist1));
+				color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));	
+			}
 		}
 	#endif
 }
