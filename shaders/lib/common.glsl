@@ -24,6 +24,8 @@ uniform int logicalHeightLimit;
 uniform float viewWidth;
 uniform float viewHeight;
 
+#define PRESET 1 //[0 1 2]
+
 const vec3 alphaFogColor = vec3(0.75, 0.85, 1.0);
 
 vec3 BSC(vec3 color, float brt, float sat, float con)
@@ -67,13 +69,19 @@ vec3 calcSkyColor(vec3 pos) {
 	float upDot = dot(pos, gbufferModelView[1].xyz); //not much, what's up with you?
 	vec3 color;
 	#ifdef COLORED_LIGHTING
-		color = mix(fogColor * vec3(1.5,1.25,1) *0.75, vec3(0.5), rainStrength);
+		color = mix((fogColor*1.25) * vec3(1.5,1.25,1) *0.75, vec3(0.5), rainStrength);
 	#else
-		color = mix(fogColor, vec3(0.5), rainStrength);
+		color = mix((fogColor*1.25), vec3(0.5), rainStrength);
 	#endif
+
 	color = BSC(color, getLuminance(skyColor)*1.5, 1.0, 1.0);
+
 	#ifndef HORROR
-		return mix(BSC(vec3(0.55, 0.74, 1)*0.75, clamp(getLuminance(skyColor), 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
+		#if PRESET == 2
+			return mix(BSC(vec3(1, 0.9, 1.0), clamp(getLuminance(skyColor), 0.0, 1.0), 1.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
+		#else
+			return mix(BSC(vec3(0.55, 0.74, 1)*0.75, clamp(getLuminance(skyColor), 0.0, 1.0), 2.0, 1.0), color, fogify(max((upDot/6)+0.05, 0.0), 0.01));
+		#endif
 	#else
 		return vec3(1)*getLuminance(skyColor);
 	#endif

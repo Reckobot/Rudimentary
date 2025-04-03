@@ -24,29 +24,7 @@ layout(location = 1) out vec4 light;
 layout(location = 2) out vec4 encodedNormal;
 
 void main() {
-	#if PRESET == 0
-		if ((bool(isTintedAlpha))&&((((glcolor.r + glcolor.b)/2)/glcolor.g)<0.8)){
-			vec3 tintcolor = vec3(0.4, 0.8, 0.2);
-			vec4 tint = vec4(tintcolor, glcolor.a);
-			if (bool(isLeaves)){
-				tint.rgb = BSC(tint.rgb, 1.0, (1-getLuminance(texture(gtexture, texcoord).rgb))*2.1*tintSaturation, 1.0);
-			}else{
-				tint.rgb = BSC(tint.rgb, 1.2, 0.865, 1.75);
-			}
-			color = texture(gtexture, texcoord) * tint;
-			color.rgb = BSC(color.rgb, 1.0, 1.0, 0.8);
-			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
-		}else{
-			color = texture(gtexture, texcoord) * glcolor;
-		}
-	#else
-		if (bool(isTintedAlpha)){
-			color = texture(gtexture, texcoord) * vec4(BSC(glcolor.rgb, 1.0, 1.0, 1.0), 1);
-			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
-		}else{
-			color = texture(gtexture, texcoord) * glcolor;
-		}
-	#endif
+	color = texture(gtexture, texcoord) * glcolor;
 	vec2 lmc = lmcoord;
 	light = texture(lightmap, lmc);
 
@@ -55,7 +33,7 @@ void main() {
 	if (logicalHeightLimit == 384){
 		ambient = 0.045;
 	}else{
-		ambient = 0.25;
+		ambient = 0.75;
 	}
 
 	light.rgb = clamp(light.rgb, ambient, 1.0);

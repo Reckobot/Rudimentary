@@ -4,7 +4,7 @@ option.DISCLAIMER = Note
 option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
 value.DISCLAIMER.0 = HOVER FOR INFO
 
-value.ALPHACRAFT.0 = v7.4
+value.ALPHACRAFT.0 = v8.0
 
 value.RENDER_DISTANCE.0 = WORLD BORDER
 value.RENDER_DISTANCE.1 = FAR
@@ -38,6 +38,7 @@ option.WATERMARK_SCALE = Alpha watermark scale
 option.PRESET = Color preset
 value.PRESET.0 = ALPHA
 value.PRESET.1 = BETA
+value.PRESET.2 = PASTEL
 value.PRESET.0.comment = Brighter colors, vibrant
 value.PRESET.1.comment = Dimmer colors, easier on the eyes
 
@@ -67,8 +68,4 @@ option.GODRAYS_INTENSITY = Godrays intensity
 
 option.AFFINE_TEXTURES = Affine textures
 
-option.MARKIPLIER = markiplier.
-value.MARKIPLIER.1509 = h
-value.MARKIPLIER.-10 = null
-value.MARKIPLIER.100000000000000000000000000000000000000000000000000000000 = 1/0
-value.MARKIPLIER.17 = 17 cows
+option.MARKIPLIER = Distortion factor

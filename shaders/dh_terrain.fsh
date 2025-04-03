@@ -35,27 +35,24 @@ void main() {
 	#if PRESET == 0
 		vec3 compare = BSC(glcolor.rgb, 4.0, 1.0, 1.0);
 		if( (bool(isLeaves)||bool(isGrass))&&((((compare.r + compare.b)/2)/compare.g) < 0.8)){
-			vec3 tintcolor = vec3(0.4, 0.8, 0.2);
+			vec3 tintcolor = vec3(0.4, 0.8, 0.2)*0.75;
 			vec4 tint = vec4(tintcolor, glcolor.a);
 			if (!bool(isLeaves)){
-				tint.rgb = BSC(tint.rgb, 0.75, 0.75, 1.5);
+				tint.rgb = BSC(tint.rgb, 0.9, 0.75, 1.5);
 			}else{
-				tint.rgb = BSC(tint.rgb, 0.9, 2.0, 1.5);
+				tint.rgb = BSC(tint.rgb, 1.0, 0.925, 1.5);
 			}
 			color = texture(gtexture, texcoord) * tint;
 			color.rgb = BSC(color.rgb, 1.0, 1.0, 0.8);
 			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
 		}else{
 			color = texture(gtexture, texcoord) * glcolor;
-			color.rgb = BSC(color.rgb, 1.2, 1.5, 1.0);
+			color.rgb = BSC(color.rgb, 1.0, 1.4, 1.0);
 		}
-	#else
+	#elif PRESET == 1
 		color = texture(gtexture, texcoord) * glcolor;
-		if (!bool(isLeaves)){
-			color.rgb = BSC(color.rgb, 1.25, 1.25, 1.0);
-		}else{
-			color.rgb = BSC(color.rgb, 1.35, 1.25, 1.0);
-		}
+		color.rgb = BSC(color.rgb, 1.0, 1.25, 1.0);
+	#elif PRESET == 2
 	#endif
 	vec2 lmc = lmcoord;
 	light = texture(lightmap, lmc);

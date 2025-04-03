@@ -38,34 +38,26 @@ void main() {
 	coord = clamp(coord, textureBounds1, textureBounds2);
 
 	#if PRESET == 0
-		if ((bool(isTintedAlpha))&&((glcolor.r + glcolor.g + glcolor.b)/3 < 0.9)){
-			vec3 tintcolor = vec3(0.4, 0.8, 0.2)*0.75;
+		if ((abs(((glcolor.r + glcolor.b)/2) - glcolor.g)*4 > 0.5)){
+			vec3 tintcolor = vec3(0.4, 0.8, 0.2);
 			vec4 tint = vec4(tintcolor, glcolor.a);
-			if (bool(isLeaves)){
-				tint.rgb = BSC(tint.rgb, 1.7, (1-getLuminance(texture(gtexture, coord).rgb))*2.1*tintSaturation, 1.0);
-			}else{
-				tint.rgb = BSC(tint.rgb, 1.45, 0.865, 1.75);
-			}
-			color = texture(gtexture, coord) * tint;
+			color = texture(gtexture, texcoord) * tint;
 			color.rgb = BSC(color.rgb, 1.0, 1.0, 0.8);
-			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
-			if (bool(isGrass)){
-				color.rgb = BSC(color.rgb, 1.1, 0.5, 1.0);
-			}
+			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS*2, FOLIAGE_SATURATION, FOLIAGE_CONTRAST);
 		}else{
-			color = texture(gtexture, coord) * glcolor;
+			color = texture(gtexture, texcoord) * glcolor;
 		}
 	#elif PRESET == 1
-		if (bool(isTintedAlpha)&&((glcolor.r + glcolor.g + glcolor.b)/3 < 0.9)){
+		if (((glcolor.r + glcolor.g + glcolor.b)/3 < 0.9)){
 			color = texture(gtexture, coord) * vec4(BSC(glcolor.rgb, 1.0, 1.0, 1.0), 1);
-			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS*1.6, FOLIAGE_SATURATION*0.9, FOLIAGE_CONTRAST*0.8);
+			color.rgb = BSC(color.rgb, FOLIAGE_BRIGHTNESS*2.0, FOLIAGE_SATURATION*0.9, FOLIAGE_CONTRAST*0.8);
 		}else{
 			color = texture(gtexture, coord) * glcolor;
 		}
 	#elif PRESET == 2
 		color = texture(gtexture, coord) * glcolor;
 		vec3 tint = (vec3(1.0, 0.9, 1.0))*0.95;
-		color.rgb = BSC(color.rgb * (tint*1.25), 1.5, 1.0, 0.65);
+		color.rgb = BSC(color.rgb * (tint*1.25), 2.0, 1.0, 0.65);
 	#endif
 	vec2 lmc = lmcoord;
 	light = texture(lightmap, lmc);

@@ -23,9 +23,9 @@ void main() {
 	vec3 lightVector = normalize(shadowLightPosition);
 	vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
 
-	float depth = texture(depthtex1, texcoord).r;
+	float depth = texture(depthtex0, texcoord).r;
 
-	if ((depth < 1)&&(texture(colortex3, texcoord) == vec4(0))){
+	if ((depth < 1)&&(texture(colortex3, texcoord) == vec4(0))&&(depth != texture(depthtex1, texcoord).r)){
 		float mult = 1.0;
 		mult *= encodedNormal.r;
 		mult *= 1-encodedNormal.r;
