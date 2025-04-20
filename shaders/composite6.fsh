@@ -4,6 +4,7 @@
 
 uniform sampler2D colortex0;
 uniform sampler2D colortex6;
+uniform sampler2D colortex10;
 
 in vec2 texcoord;
 
@@ -41,4 +42,8 @@ void main() {
 		vec4 watermark = texelFetch(colortex6, c, 0);
 		color.rgb = mix(color.rgb, watermark.rgb, watermark.a);
 	#endif
+
+	if (texture(colortex10, texcoord) != vec4((0))){
+		color.rgb = texture(colortex10, texcoord).rgb;
+	}
 }
