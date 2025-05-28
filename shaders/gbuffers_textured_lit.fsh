@@ -1,1 +1,1 @@
-#include "/gbuffer/particle.glsl"
+#include "/fsh/particle.glsl"

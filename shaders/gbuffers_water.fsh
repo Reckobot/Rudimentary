@@ -1,1 +1,1 @@
-#include "/gbuffer/water.glsl"
+#include "/fsh/water.glsl"

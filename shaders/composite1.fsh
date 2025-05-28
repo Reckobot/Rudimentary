@@ -1,136 +1,138 @@
 #version 330 compatibility
+#extension GL_ARB_shader_storage_buffer_object : enable
 #include "/lib/common.glsl"
-#include "/lib/settings.glsl"
 
-uniform sampler2D shadowtex0;
-uniform sampler2D shadowtex1;
-uniform sampler2D shadowcolor0;
-uniform sampler2D depthtex0;
-uniform sampler2D depthtex1;
 uniform sampler2D colortex0;
 uniform sampler2D colortex1;
 uniform sampler2D colortex2;
 uniform sampler2D colortex3;
-uniform sampler2D colortex6;
+uniform sampler2D colortex4;
+uniform sampler2D depthtex0;
+uniform sampler2D depthtex1;
+uniform sampler2D shadowtex0;
+
+layout(std430, binding = 0) buffer frameData {
+    float godRayMult;
+};
 
 in vec2 texcoord;
 
-/* RENDERTARGETS: 0,11 */
+/* RENDERTARGETS: 0,5,6 */
 layout(location = 0) out vec4 color;
-layout(location = 1) out vec4 volumetricBuffer;
+layout(location = 1) out vec4 godrayBuffer;
+layout(location = 2) out vec4 fogBuffer;
 
 void main() {
+	//set color
 	color = texture(colortex0, texcoord);
 
-    float depth = texture(depthtex0, texcoord).r;
+	//initialize variables
+	float depth = texture(depthtex0, texcoord).r;
+	float depth1 = texture(depthtex1, texcoord).r;
+	mat4 projectionInverse = gbufferProjectionInverse;
+
+	//initialize depth for distant horizons
+	if(depth >= 1.0) {
+		#ifdef DISTANT_HORIZONS
+			depth = texture(dhDepthTex0, texcoord).r;
+			depth1 = texture(dhDepthTex1, texcoord).r;
+			projectionInverse = dhProjectionInverse;
+		#endif
+	}
+	
+	//oh sweet jesus
+	vec3 light = texture(colortex4, texcoord).rgb;
+	vec3 normal = texture(colortex3, texcoord).rgb;
 	vec3 NDCPos = vec3(texcoord.xy, depth) * 2.0 - 1.0;
-	vec3 viewPos = projectAndDivide(gbufferProjectionInverse, NDCPos);
+	vec3 viewPos = projectAndDivide(projectionInverse, NDCPos);
+	vec3 camNDCPos = vec3(texcoord.xy, 0.0) * 2.0 - 1.0;
+	vec3 camviewPos = projectAndDivide(projectionInverse, camNDCPos);
+	vec3 centercamNDCPos = vec3(vec2(0.5, 0.5), 0.0) * 2.0 - 1.0;
+	vec3 centercamviewPos = projectAndDivide(projectionInverse, centercamNDCPos);
+	vec3 centercamworldPos = (gbufferModelViewInverse * vec4(centercamviewPos, 1.0)).xyz;
+	centercamworldPos.y += 0.5;
+	centercamviewPos = (gbufferModelView * vec4(centercamworldPos, 1.0)).xyz;
+	vec3 camShadowScreen = viewToShadowScreen(centercamviewPos, false, depth, depth1, normal, true, false, texcoord);
+	vec3 camLook = normalize(camviewPos);
+	float lookModifier = dot(playerLookVector, mat3(gbufferModelViewInverse) * normalize(sunPosition))-0.75;
+	lookModifier = clamp(lookModifier*8, 1.0, 10.0);
 
-    float depth1 = texture(depthtex1, texcoord).r;
-	vec3 NDCPos1 = vec3(texcoord.xy, depth1) * 2.0 - 1.0;
-	vec3 viewPos1 = projectAndDivide(gbufferProjectionInverse, NDCPos1);
-
-	vec3 pos = screenToView(vec3(texcoord.xy, depth));
-
-	vec3 fogcolor = calcSkyColor(normalize(pos));
-	float fogdensity = 1.0;
-	bool doFog = false;
-
-	if ((depth < 1)){
-		color.rgb = BSC(color.rgb, 1.0, 1.1, 1.0);
-	}
-
-	float renderdist;
-
-	#if RENDER_DISTANCE == 1
-		renderdist = 0.1;
-	#elif RENDER_DISTANCE == 2
-		renderdist = 0.175;
-	#elif RENDER_DISTANCE == 3
-		renderdist = 0.4;
-	#elif RENDER_DISTANCE == 4
-		renderdist = 0.6;
-	#endif
-
-	if (texture(colortex3, texcoord) == vec4(1)){
-		renderdist *= 0.25;
-	}
-
-	fogdensity *= 1+rainStrength*0.25;
-	renderdist *= 1+rainStrength;
-
-	#ifndef DISTANT_HORIZONS
-	if ((depth < 1)){
-		doFog = true;
-	}
-	#else
-		doFog = false;
-	#endif
-
-	if (isEyeInWater == 1){
-		fogcolor = vec3(0.05,0.05,0.35)*0.6;
-		fogdensity *= 0.25;
-		doFog = true;
-	}
-
-	#ifdef HORROR
-		fogdensity *= 0.5;
-		renderdist *= 8-(getLuminance(skyColor)*8);
-	#endif
-
-	renderdist /= RENDER_DISTANCE_MULT;
-
-	float dist = (length(viewPos) / (64/fogdensity))*4*renderdist;
-	float dist1 = (length(viewPos1) / (64/fogdensity))*4*renderdist;
-
-	#if RENDER_DISTANCE == 0
-		dist = length(viewPos) / far;
-	#endif
-
-	vec3 startPos = screenToView(vec3(texcoord.xy, depth));
-	vec3 viewDir = normalize(startPos);
-	float volumetricIntensity = 0;
-	int count = 0;
-
+	//godrays!!!
 	#ifdef GODRAYS
+	float godray = 0.0;
+	int stepCount = 16;
+			for(int i = 1; i < 1+stepCount; i++) {
+				vec3 ray = camNDCPos + (camLook*i*IGN(texcoord, frameCounter, vec2(viewWidth, viewHeight)));
+				bool pixelate = false;
+				vec3 rayShadowScreen = viewToShadowScreen(ray, pixelate, depth, depth1, normal, true, false, texcoord);
 
-	for (int i = 0; i < 16; i++){
-		vec3 rayPos = startPos + (viewDir*i*8);
-		rayPos *= (IGN(texcoord, frameCounter, vec2(viewWidth, viewHeight)*8));
-		vec3 ftplPos = (gbufferModelViewInverse * vec4(rayPos, 1.0)).xyz;
-		vec3 shadowviewPos = (shadowModelView * vec4(ftplPos, 1.0)).xyz;
-		vec4 shadowclipPos = shadowProjection * vec4(shadowviewPos, 1.0);
-		shadowclipPos.xyz = distortShadowClipPos(shadowclipPos.xyz);
-		vec3 shadowndcPos = shadowclipPos.xyz/shadowclipPos.w;
-		vec3 shadowscreenPos = shadowndcPos * 0.5 + 0.5;
+				if(ray.z > viewPos.z) {
+					if(isEyeInWater == 0) {
+						godray += step(rayShadowScreen.z, texture(shadowtex0, rayShadowScreen.xy).r)/(stepCount);
+					} else {
+						godray += (step(rayShadowScreen.z, texture(shadowtex0, rayShadowScreen.xy).r)/(stepCount))-(step(rayShadowScreen.z, texture(shadowtex0, rayShadowScreen.xy).r)/(stepCount)/2);
+					}
+				}
+			}
 
-		if (length(rayPos) < length(screenToView(vec3(texcoord, depth)))){
-			float shadow = step(shadowscreenPos.z, texture(shadowtex1, shadowscreenPos.xy).r);
-			volumetricIntensity += shadow;
-		}
-	}
+			float modifier = clamp(step(camShadowScreen.z, texture(shadowtex0, camShadowScreen.xy).r), 0.0, 1.0);
+			modifier = 1-modifier;
 
-	vec3 volumetricColor = BSC(sunColor, 1.0, 3.0, 1.0);
+			if(isEyeInWater == 0) {
+				godRayMult += ((modifier-0.5)*2.0)*((frameTime*0.00005)*GODRAY_TRANSITION);
+				godRayMult = clamp(godRayMult, 0.125*GODRAY_MINIMUM, 1.0);
 
-	volumetricColor = mix(volumetricColor, ambientColor, 1-getLuminance(skyColor));
+				godray *= 1-rainStrength;
+				godrayBuffer = vec4(clamp((godray*godRayMult*lookModifier), 0.0, 0.375*GODRAY_INTENSITY));
+			} else {
+				godRayMult += ((modifier-0.5)*2.0)*((frameTime*0.00005)*GODRAY_TRANSITION);
+				godRayMult = clamp(godRayMult, 0.125*GODRAY_MINIMUM, 1.0);
 
-	volumetricIntensity *= 2;
-	if (depth >= 1){
-		volumetricIntensity = 1.0;
-	}
-	vec3 lightVector = normalize(shadowLightPosition);
-	vec3 worldLightVector = mat3(gbufferModelViewInverse) * lightVector;
-	volumetricIntensity = clamp(volumetricIntensity, 0.0, 0.25*GODRAYS_INTENSITY);
-	volumetricIntensity *= clamp(getLuminance(skyColor)*4, 0.25, 1.0);
-	volumetricIntensity *= 1-rainStrength;
-	volumetricBuffer = vec4(volumetricColor, volumetricIntensity);
-
+				godray *= 1-rainStrength;
+				godrayBuffer = vec4(clamp((godray*godRayMult*12)+0.125, 0.0, 0.75*GODRAY_INTENSITY));
+			}
 	#endif
 
-	#if RENDER_DISTANCE != 5
-		if (doFog){
-			float fogFactor = exp(-4*fogdensity * (1.0 - dist));
-			color.rgb = mix(color.rgb, fogcolor, clamp(fogFactor, 0.0, 1.0));
+	//fog!!!
+	float dist;
+	float fogFactor;
+	#ifndef DISTANT_HORIZONS
+		dist = length(viewPos) / far;
+
+		if(texture(colortex2, texcoord).rgb == vec3(1.0)) {
+			dist /= 3;
 		}
+
+		dist *= 1+rainStrength;
+
+		float density = 3.0;
+
+		if(isEyeInWater == 1) {
+			dist *= 6;
+			density /= 4;
+		}
+
+		fogFactor = exp(-density * (1.125 - dist));
+	#else
+		if(isEyeInWater != 1) {
+			dist = length(viewPos) / dhRenderDistance;
+		} else {
+			dist = length(viewPos) / far;
+		}
+		fogFactor = pow(dist, 0.75);
 	#endif
+
+	//underwater fog
+	if(depth < 1.0) {
+		if(isEyeInWater != 1) {
+			fogBuffer = vec4(texture(colortex1, texcoord).rgb, clamp(fogFactor, 0.0, 1.0));
+		} else {
+			fogBuffer = vec4(pow(vec3(0.5, 0.75, 1.0), vec3(1.35))*0.825*(getLuminance(skyColor)+0.125), clamp(fogFactor, 0.0, 1.0));
+		}
+	}
+	
+	//change sky when underwater
+	if(texture(depthtex0, texcoord).r >= 1.0 && isEyeInWater == 1) {
+		color.rgb = pow(skyColor, vec3(3.0))*0.25;
+	}
 }

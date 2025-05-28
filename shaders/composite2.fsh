@@ -1,24 +1,42 @@
 #version 330 compatibility
 #include "/lib/common.glsl"
-#include "/lib/settings.glsl"
 
-uniform sampler2D colortex11;
+uniform sampler2D colortex0;
+uniform sampler2D colortex5;
+uniform sampler2D colortex6;
+uniform sampler2D depthtex0;
 
 in vec2 texcoord;
 
-/* RENDERTARGETS: 11 */
+/* RENDERTARGETS: 0,5 */
 layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 godrayBuffer;
 
 void main() {
-	vec4 average = vec4(0);
+	//set color
+	color = texture(colortex0, texcoord);
 
-	int radius = 8;
-	int count = 0;
-	for (int x = -radius; x <= radius; x++){
-		average += texture(colortex11, texcoord+vec2(x/viewWidth, 0));
-		count++;
+	//initialize depth
+	float depth = texture(depthtex0, texcoord).r;
+
+	//initialize depth for distant horizons
+	if(depth >= 1.0) {
+		#ifdef DISTANT_HORIZONS
+			depth = texture(dhDepthTex0, texcoord).r;
+		#endif
 	}
-	average /= count;
 
-	color = average;
+	//blur the godray
+	float godray = 0.0;
+	int count = 1;
+	int radius = 4;
+	for(int x = -radius; x <= radius; x++) {
+			float sampl = texture(colortex5, texcoord+vec2(x/viewWidth, 0.0)).r;
+			godray += sampl;
+			count++;
+	}
+	godray /= count;
+
+	//write to buffer
+	godrayBuffer = vec4(godray);
 }

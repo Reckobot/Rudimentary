@@ -1,1 +1,1 @@
-#include "/gbuffer/common.glsl"
+#include "/fsh/common.glsl"

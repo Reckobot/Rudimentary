@@ -1,71 +1,43 @@
-option.ALPHACRAFT = Rudimentary
-option.ALPHACRAFT.comment = Made by Recko! If you want to contact him, his username on discord is "reckobot".
-option.DISCLAIMER = Note
-option.DISCLAIMER.comment = As of right now, the shader CANNOT change the smooth lighting option, so you have to disable it yourself in video settings.
-value.DISCLAIMER.0 = HOVER FOR INFO
+option.RADIANCE = Rudimentary
+option.RADIANCE.comment = Made by Recko! If you want to contact him, his username on discord is "reckobot".
 
-value.ALPHACRAFT.0 = v8.2
+value.RADIANCE.0 = v9.0
 
-value.RENDER_DISTANCE.0 = WORLD BORDER
-value.RENDER_DISTANCE.1 = FAR
-value.RENDER_DISTANCE.2 = NORMAL
-value.RENDER_DISTANCE.3 = SHORT
-value.RENDER_DISTANCE.4 = TINY
-value.RENDER_DISTANCE.5 = NO FOG
-option.RENDER_DISTANCE.comment = Herobrine reference
+option.AMBIENT = Ambient
+option.GODRAYS = Godrays
+option.GODRAY_TRANSITION = Godrays adaptiveness
+option.GODRAY_INTENSITY = Godrays intensity
+option.GODRAY_MINIMUM = Godrays minimum
+option.FOG = Fog
+option.SUN_ROTATION = Sun rotation
 
-option.RENDER_DISTANCE = Render distance (Fog)
-option.FAST_LEAVES = Fast leaves
-option.INVISIBLE_GRASS = Invisible grass
-option.CLOUD_OFFSET = Cloud height offset
+option.SHADOW_PIXELATION = Shadow pixelation
+option.SHADOW_RESOLUTION = Shadow resolution
+option.SHADOW_DISTANCE = Shadow distance
 
+option.PIXELATE_SHADOWS = Pixelate shadows
+
+option.GAMMA = Gamma
 option.BRIGHTNESS = Brightness
 option.SATURATION = Saturation
 option.CONTRAST = Contrast
 
-option.WATER_TRANSPARENCY = Transparency
-option.WATER_BRIGHTNESS = Brightness
-option.WATER_SATURATION = Saturation
-option.WATER_CONTRAST = Contrast
+option.ALPHA_FOLIAGE = Alpha foliage
+option.WARM_COLORS = Legacy radiance
 
-option.FOLIAGE_BRIGHTNESS = Brightness
-option.FOLIAGE_SATURATION = Saturation
-option.FOLIAGE_CONTRAST = Contrast
+option.SHADOWS = Shadows
+option.SHADING = Shading
 
-option.WATERMARK = Alpha watermark
-option.WATERMARK_SCALE = Alpha watermark scale
+option.MINIMUM_LIGHT = Minimum light
+option.AMBIENT_OCCLUSION = Ambient occlusion
+option.AMBIENT_OCCLUSION_STRENGTH = AO strength
 
-option.PRESET = Color preset
-value.PRESET.0 = ALPHA
-value.PRESET.1 = BETA
-value.PRESET.2 = PASTEL
-value.PRESET.0.comment = Brighter colors, vibrant
-value.PRESET.1.comment = Dimmer colors, easier on the eyes
+option.RENDER_SCALE = Render scale
+option.RENDER_INTERP = Render filtering
+option.VERTEX_SNAPPING = Vertex snapping
+option.DISTORTION = Vertex snap intensity
 
-option.RENDER_DISTANCE_MULT = Render distance multiplier
+value.GAMMA.0.6 = Legacy console
 
-option.RESOLUTION_SCALE = Resolution scale
-option.DISTORTION = Vertex distortion
-value.DISTORTION.0 = Off
-option.COLORED_LIGHTING = Vibrance
-option.LIGHTING_SATURATION = Lighting saturation
-option.ENTITY_DISTORTION = Entity distortion
-option.DITHERING = Dithering
-option.SCANLINE_GAP = Scanline gap
-option.SCANLINE_SPEED = Scanline speed
-
-option.CRT_SCANLINES = CRT scanlines
-option.CRT_DISTORTION = CRT distortion
-option.CRT_ASPECT = 4:3
-
-option.HORROR = Horror mode
-option.HORROR.comment = Spoopy.
-
-option.WAVY_WATER = Wavy water
-
-option.GODRAYS = Godrays
-option.GODRAYS_INTENSITY = Godrays intensity
-
-option.AFFINE_TEXTURES = Affine textures
-
-option.MARKIPLIER = Distortion factor
+profile.LegacyConsole = Legacy console
+profile.TrueLegacyConsole = True legacy console
